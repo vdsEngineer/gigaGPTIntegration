@@ -29,7 +29,7 @@ class ContextService
      */
     public function setContext(array $context): self|Exception
     {
-        $this->valudateArrayContext($context);
+        $this->validateArrayContext($context);
 
         $this->context = $context;
 
@@ -49,7 +49,7 @@ class ContextService
      */
     public function mergeContext(array $context): self|Exception
     {
-        $this->valudateArrayContext($context);
+        $this->validateArrayContext($context);
 
         $this->context = array_merge($this->context, $context);
 
@@ -59,9 +59,9 @@ class ContextService
     /**
      * @return self|Exception
      */
-    public function valudateContext(int $limit = 100): self|Exception
+    public function validateContext(int $limit = 100): self|Exception
     {
-        $this->valudateArrayContext($this->context, $limit);
+        $this->validateArrayContext($this->context, $limit);
 
         return $this;
     }
@@ -84,7 +84,7 @@ class ContextService
     /**
      * @return void|Exception
      */
-    private function valudateArrayContext(array $array, int $limit = 100) 
+    private function validateArrayContext(array $array, int $limit = 100)
     {
         if (empty($array)) {
             throw new Exception('Context is empty');

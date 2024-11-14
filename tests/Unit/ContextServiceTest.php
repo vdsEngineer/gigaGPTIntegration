@@ -7,7 +7,7 @@ use VdsEngineer\GigaGptIntegration\Services\ContextService;
 
 class ContextServiceTest extends TestCase
 {
-    public function testGetUserContextAndValudate(): void
+    public function testGetUserContextAndValidate(): void
     {
         $ContextService = new ContextService;
         $context = $ContextService->getContext();
@@ -15,13 +15,13 @@ class ContextServiceTest extends TestCase
         $this->assertCount(0, $context);
 
         try {
-            $ContextService->valudateContext();
+            $ContextService->validateContext();
             $this->fail('This test should fail');
         } catch (\Throwable $th) {
         }
 
         $ContextService->pushContextUser('Hi world');
-        $ContextService->valudateContext();
+        $ContextService->validateContext();
     }
 
     public function testAddContext(): void

@@ -10,7 +10,7 @@ class GigaGptTest extends TestCase
 {
     public function testSetting(): void
     {
-        $dotenv = Dotenv::createMutable(__DIR__.'/../..')->load();
+        $dotenv = Dotenv::createMutable(__DIR__ . '/../..')->load();
         $gigaGpt = new GigaGpt($_ENV['AUTH_TOKEN']);
         $this->assertIsObject($gigaGpt);
         $setting = $gigaGpt->getSetting();
@@ -35,7 +35,7 @@ class GigaGptTest extends TestCase
             'xSessionId' => '1234567890',
             'xClientId' => '1234567890',
             'RqUID' => '1234567890',
-            'functionCall' => 'chatCompletionm',
+            'functionCall' => 'chatCompletion',
         ];
 
         $gigaGpt->setSetting($settingArray);
@@ -47,11 +47,11 @@ class GigaGptTest extends TestCase
 
     public function testChatCompletion(): void
     {
-        $dotenv = Dotenv::createMutable(__DIR__.'/../..')->load();
+        $dotenv = Dotenv::createMutable(__DIR__ . '/../..')->load();
         $gigaGpt = (new GigaGpt($_ENV['AUTH_TOKEN']))->setToken();
         // success test
-        /*$response = $gigaGpt->chatCompletionm('что умеет GigaChat');*/
-        /*$this->assertIsString($response);*/
+        /* $response = $gigaGpt->chatCompletion('что умеет GigaChat'); */
+        /* $this->assertIsString($response); */
         // error test
         $gigaGpt = new GigaGpt($_ENV['AUTH_TOKEN']);
         try {
@@ -66,38 +66,39 @@ class GigaGptTest extends TestCase
             $response = $gigaGpt->chatCompletion();
 
             $this->fail('Exception not thrown');
-        } catch (\Throwable $th) {}
+        } catch (\Throwable $th) {
+        }
     }
 
-    /*public function testChatCompletionImage()*/
-    /*{*/
-    /*    Dotenv::createMutable(__DIR__.'/../..')->load();*/
-    /**/
-    /*    $gigaGpt = (new GigaGpt($_ENV['AUTH_TOKEN']))->setToken();*/
-    /*    $response = $gigaGpt->chatCompletionImage('Нарисуй арт');*/
-    /*    $this->assertIsString($response);*/
-    /**/
-    /*    return $gigaGpt;*/
-    /*}*/
+    public function testChatCompletionImage()
+    {
+        Dotenv::createMutable(__DIR__ . '/../..')->load();
+
+        $gigaGpt = (new GigaGpt($_ENV['AUTH_TOKEN']))->setToken();
+        $response = $gigaGpt->chatCompletionImage('Нарисуй арт');
+        $this->assertIsString($response);
+
+        return $gigaGpt;
+    }
 
     /**
-     * //depends testChatCompletionImage
+     * @depends testChatCompletionImage
      */
-    /*public function testDownloadFile($gigaGpt): void*/
-    /*{*/
-    /*    $context = $gigaGpt->getContextGPT();*/
-    /*    $content = $context[count($context) - 1]['content'];*/
-    /*    $pattern = '/(")(\d||\w||-)*(")/U';*/
-    /*    preg_match($pattern, $content, $matches);*/
-    /*    $response = $gigaGpt->downloadFile(str_replace('"', '', $matches[0]));*/
-    /*    $this->assertIsString($response);*/
-    /*    file_put_contents(__DIR__.'/test.jpg', $response);*/
-    /*    $this->assertFileExists(__DIR__.'/test.jpg');*/
-    /*}*/
+    public function testDownloadFile($gigaGpt): void
+    {
+        $context = $gigaGpt->getContextGPT();
+        $content = $context[count($context) - 1]['content'];
+        $pattern = '/(")(\d||\w||-)*(")/U';
+        preg_match($pattern, $content, $matches);
+        $response = $gigaGpt->downloadFile(str_replace('"', '', $matches[0]));
+        $this->assertIsString($response);
+        file_put_contents(__DIR__ . '/test.jpg', $response);
+        $this->assertFileExists(__DIR__ . '/test.jpg');
+    }
 
     public function testGetListModels(): void
     {
-        Dotenv::createMutable(__DIR__.'/../..')->load();
+        Dotenv::createMutable(__DIR__ . '/../..')->load();
         $gigaGpt = (new GigaGpt($_ENV['AUTH_TOKEN']))->setToken();
         $response = $gigaGpt->getListModels();
         $this->assertIsArray($response);

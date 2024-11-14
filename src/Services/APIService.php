@@ -50,7 +50,7 @@ class APIService
 
     public function chatCompletion(SettingDTO $settingDTO, ContextService $contextService): array
     {
-        $contextService->valudateContext();
+        $contextService->validateContext();
 
         $requestDTO = new RequestDTO($settingDTO, $contextService->getContext());
 
@@ -67,7 +67,7 @@ class APIService
 
     public function chatCompletionImage(SettingDTO $settingDTO, ContextService $contextService): array
     {
-        $contextService->valudateContext();
+        $contextService->validateContext();
 
         $requestDTO = new RequestDTO($settingDTO, $contextService->getContext());
 
